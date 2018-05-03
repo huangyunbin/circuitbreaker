@@ -26,4 +26,13 @@ public class SlidingWindowTest {
         int count = slidingWindow.count(3L);
         assertThat(count).isEqualTo(2);
     }
+    
+    @Test
+    public void addTest3() {
+        SlidingWindow slidingWindow = new SlidingWindow(3);
+        slidingWindow.add(1L);
+        slidingWindow.add(1L);
+        int count = slidingWindow.count(4L);
+        assertThat(count).isEqualTo(0);
+    }
 }
