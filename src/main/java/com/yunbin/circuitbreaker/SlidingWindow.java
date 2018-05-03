@@ -15,10 +15,15 @@ public class SlidingWindow {
     
     public void add(long time) {
         clear(time);
-        int index = (int) (time / size);
-        counts[index] = counts[index] + 1;
+        int index = (int) (time % size);
+        if (time > lastTime) {
+            lastTime = time;
+            counts[index] = 1;
+        } else {
+            counts[index] = counts[index] + 1;
+        }
         
-        lastTime = time;
+        
     }
     
     public int count(long time) {
