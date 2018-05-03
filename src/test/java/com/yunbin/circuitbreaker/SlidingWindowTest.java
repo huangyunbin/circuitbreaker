@@ -10,10 +10,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class SlidingWindowTest {
     
     @Test
-    public void addTest() {
+    public void addTest1() {
         SlidingWindow slidingWindow = new SlidingWindow(3);
         slidingWindow.add(1L);
         int count = slidingWindow.count(3L);
         assertThat(count).isEqualTo(1);
+    }
+    
+    
+    @Test
+    public void addTest2() {
+        SlidingWindow slidingWindow = new SlidingWindow(3);
+        slidingWindow.add(1L);
+        slidingWindow.add(1L);
+        int count = slidingWindow.count(3L);
+        assertThat(count).isEqualTo(2);
     }
 }
