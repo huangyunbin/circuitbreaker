@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.CyclicBarrier;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicIntegerArray;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -12,6 +12,34 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Created by cloud.huang on 18/5/3.
  */
 public class SlidingWindowTest {
+    
+    private volatile AtomicIntegerArray counts = new AtomicIntegerArray(100);
+    
+    @Test
+    public void AtomicIntegerArrayTest() throws Exception {
+        final int threadNum = 100;
+        final int num = 10000;
+        final CyclicBarrier barrier = new CyclicBarrier(threadNum);
+        final CountDownLatch countDownLatch = new CountDownLatch(threadNum);
+        for (int i = 0; i < threadNum; i++) {
+            new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        barrier.await();
+                        for (int i = 0; i < num; i++) {
+                            counts.getAndIncrement(0);
+                        }
+                        countDownLatch.countDown();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }.start();
+        }
+        countDownLatch.await();
+        assertThat(counts.get(0)).isEqualTo(threadNum * num);
+    }
     
     @Test
     public void addTest1() {
@@ -85,7 +113,7 @@ public class SlidingWindowTest {
                                 slidingWindow.add();
                             }
                             
-                            TimeUnit.MILLISECONDS.sleep(1000);
+//                            TimeUnit.MILLISECONDS.sleep(1000);
                         }
                         
                         countDownLatch.countDown();
