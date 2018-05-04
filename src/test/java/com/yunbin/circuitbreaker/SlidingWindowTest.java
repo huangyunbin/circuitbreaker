@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -65,9 +66,10 @@ public class SlidingWindowTest {
     
     @Test
     public void addTest6() {
-        int threadNum = 100;
-        final int num = 100;
-        final SlidingWindow slidingWindow = new SlidingWindow(3);
+        int threadNum = 10;
+        final int num = 5;
+        final int circle = 1;
+        final SlidingWindow slidingWindow = new SlidingWindow(10);
         final CyclicBarrier barrier = new CyclicBarrier(threadNum);
         final CountDownLatch countDownLatch = new CountDownLatch(threadNum);
         
@@ -77,16 +79,19 @@ public class SlidingWindowTest {
                 public void run() {
                     try {
                         barrier.await();
+                        
+                        for (int i = 0; i < circle; i++) {
+                            for (int j = 0; j < num; j++) {
+                                slidingWindow.add();
+                            }
+                            
+                            TimeUnit.MILLISECONDS.sleep(1000);
+                        }
+                        
+                        countDownLatch.countDown();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    for (int i = 0; i < num; i++) {
-                        slidingWindow.add(1L);
-                        slidingWindow.add(2L);
-                        slidingWindow.add(3L);
-                        slidingWindow.add(4L);
-                    }
-                    countDownLatch.countDown();
                 }
             }.start();
             
@@ -96,8 +101,8 @@ public class SlidingWindowTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        int count = slidingWindow.count(4L);
-        assertThat(count).isEqualTo(3 * threadNum * num);
+        int count = slidingWindow.count();
+        assertThat(count).isEqualTo(circle * threadNum * num);
     }
     
     

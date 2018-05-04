@@ -1,5 +1,6 @@
 package com.yunbin.circuitbreaker;
 
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicIntegerArray;
 
 /**
@@ -15,10 +16,13 @@ public class SlidingWindow {
         counts = new AtomicIntegerArray(size);
     }
     
-    public synchronized void add(long time) {
-        if (time <= lastTime - size) {
-            return;
-        }
+    public void add() {
+        long currentSecond = TimeUnit.NANOSECONDS.toSeconds(System.nanoTime());
+        add(currentSecond);
+    }
+    
+    
+    public  void add(long time) {
         clear(time);
         int index = (int) (time % size);
         if (time > lastTime) {
@@ -29,8 +33,12 @@ public class SlidingWindow {
         }
     }
     
+    public int count() {
+        long currentSecond = TimeUnit.NANOSECONDS.toSeconds(System.nanoTime());
+        return count(currentSecond);
+    }
+    
     public int count(long time) {
-        
         clear(time);
         int result = 0;
         for (int i = 0; i < size; i++) {
