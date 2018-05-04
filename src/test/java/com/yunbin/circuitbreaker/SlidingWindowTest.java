@@ -78,7 +78,7 @@ public class SlidingWindowTest {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    for (int i = 0; i < 100; i++) {
+                    for (int i = 0; i < 10000; i++) {
                         slidingWindow.add(1L);
                     }
                     countDownLatch.countDown();
@@ -92,7 +92,7 @@ public class SlidingWindowTest {
             e.printStackTrace();
         }
         int count = slidingWindow.count(2L);
-        assertThat(count).isEqualTo(100 * 100);
+        assertThat(count).isEqualTo(100 * 10000);
     }
     
     
