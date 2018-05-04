@@ -22,8 +22,6 @@ public class SlidingWindow {
         } else {
             counts[index] = counts[index] + 1;
         }
-        
-        
     }
     
     public int count(long time) {

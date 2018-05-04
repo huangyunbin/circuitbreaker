@@ -2,6 +2,9 @@ package com.yunbin.circuitbreaker;
 
 import org.junit.Test;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.CyclicBarrier;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -58,4 +61,39 @@ public class SlidingWindowTest {
         int count = slidingWindow.count(4L);
         assertThat(count).isEqualTo(3);
     }
+    
+    
+    @Test
+    public void addTest6() {
+        SlidingWindow slidingWindow = new SlidingWindow(3);
+        CyclicBarrier barrier = new CyclicBarrier(100);
+        CountDownLatch countDownLatch = new CountDownLatch(100);
+        
+        for (int i = 0; i < 100; i++) {
+            new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        barrier.await();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    for (int i = 0; i < 100; i++) {
+                        slidingWindow.add(1L);
+                    }
+                    countDownLatch.countDown();
+                }
+            }.start();
+            
+        }
+        try {
+            countDownLatch.await();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        int count = slidingWindow.count(2L);
+        assertThat(count).isEqualTo(100 * 100);
+    }
+    
+    
 }
