@@ -8,14 +8,17 @@ import java.util.concurrent.atomic.AtomicIntegerArray;
 public class SlidingWindow {
     private int size;
     private AtomicIntegerArray counts;
-    private long lastTime = 0;
+    private volatile long lastTime = 0;
     
     public SlidingWindow(int size) {
         this.size = size;
         counts = new AtomicIntegerArray(size);
     }
     
-    public void add(long time) {
+    public synchronized void add(long time) {
+        if (time <= lastTime - size) {
+            return;
+        }
         clear(time);
         int index = (int) (time % size);
         if (time > lastTime) {
@@ -27,6 +30,7 @@ public class SlidingWindow {
     }
     
     public int count(long time) {
+        
         clear(time);
         int result = 0;
         for (int i = 0; i < size; i++) {

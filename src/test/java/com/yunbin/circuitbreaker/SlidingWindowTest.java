@@ -65,11 +65,13 @@ public class SlidingWindowTest {
     
     @Test
     public void addTest6() {
+        int threadNum = 100;
+        final int num = 100;
         final SlidingWindow slidingWindow = new SlidingWindow(3);
-        final CyclicBarrier barrier = new CyclicBarrier(100);
-        final CountDownLatch countDownLatch = new CountDownLatch(100);
+        final CyclicBarrier barrier = new CyclicBarrier(threadNum);
+        final CountDownLatch countDownLatch = new CountDownLatch(threadNum);
         
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < threadNum; i++) {
             new Thread() {
                 @Override
                 public void run() {
@@ -78,7 +80,7 @@ public class SlidingWindowTest {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    for (int i = 0; i < 1000; i++) {
+                    for (int i = 0; i < num; i++) {
                         slidingWindow.add(1L);
                         slidingWindow.add(2L);
                         slidingWindow.add(3L);
@@ -95,7 +97,7 @@ public class SlidingWindowTest {
             e.printStackTrace();
         }
         int count = slidingWindow.count(4L);
-        assertThat(count).isEqualTo(3 * 100 * 1000);
+        assertThat(count).isEqualTo(3 * threadNum * num);
     }
     
     
