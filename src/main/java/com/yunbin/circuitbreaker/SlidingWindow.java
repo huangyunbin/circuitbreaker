@@ -13,7 +13,7 @@ public class SlidingWindow {
         counts = new int[size];
     }
     
-    public void add(long time) {
+    public synchronized void add(long time) {
         clear(time);
         int index = (int) (time % size);
         if (time > lastTime) {
