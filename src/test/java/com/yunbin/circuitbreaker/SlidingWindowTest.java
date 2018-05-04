@@ -65,9 +65,9 @@ public class SlidingWindowTest {
     
     @Test
     public void addTest6() {
-        SlidingWindow slidingWindow = new SlidingWindow(3);
-        CyclicBarrier barrier = new CyclicBarrier(100);
-        CountDownLatch countDownLatch = new CountDownLatch(100);
+        final SlidingWindow slidingWindow = new SlidingWindow(3);
+        final CyclicBarrier barrier = new CyclicBarrier(100);
+        final CountDownLatch countDownLatch = new CountDownLatch(100);
         
         for (int i = 0; i < 100; i++) {
             new Thread() {

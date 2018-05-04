@@ -1,21 +1,18 @@
 package com.yunbin.circuitbreaker;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicIntegerArray;
 
 /**
  * Created by cloud.huang on 18/5/3.
  */
 public class SlidingWindow {
     private int size;
-    private AtomicInteger[] counts;
-    private  long lastTime = 0;
+    private AtomicIntegerArray counts;
+    private long lastTime = 0;
     
     public SlidingWindow(int size) {
         this.size = size;
-        counts = new AtomicInteger[size];
-        for (int i = 0; i < size; i++) {
-            counts[i] = new AtomicInteger();
-        }
+        counts = new AtomicIntegerArray(size);
     }
     
     public void add(long time) {
@@ -23,17 +20,17 @@ public class SlidingWindow {
         int index = (int) (time % size);
         if (time > lastTime) {
             lastTime = time;
-            counts[index].set(1);
+            counts.set(index, 1);
         } else {
-            counts[index].getAndIncrement();
+            counts.getAndIncrement(index);
         }
     }
     
     public int count(long time) {
         clear(time);
         int result = 0;
-        for (AtomicInteger count : counts) {
-            result += count.get();
+        for (int i = 0; i < size; i++) {
+            result += counts.get(i);
         }
         return result;
     }
@@ -43,7 +40,7 @@ public class SlidingWindow {
             return;
         }
         for (int i = 0; i < size; i++) {
-            counts[i].set(0);
+            counts.set(i, 0);
         }
     }
     
