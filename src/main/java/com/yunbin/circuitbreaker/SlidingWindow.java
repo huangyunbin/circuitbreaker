@@ -23,21 +23,23 @@ public class SlidingWindow {
     }
     
     
-    public  void add(long time) {
+    public void add(long time) {
 //        clear(time);
         int index = (int) (time % size);
         long current = lastTime.longValue();
-        if (time > current ) {
-            if( lastTime.compareAndSet(current, time)){
-                counts.set(index, 1);
-            }else{
-                add(time);
+        
+        if (time > current) {
+            int oldValue = counts.get(index);
+            if (lastTime.compareAndSet(current, time)) {
+                counts.getAndAdd(index, 1 - oldValue);
+            } else {
+                counts.getAndIncrement(index);
             }
-            System.out.println("======" + index);
-           
+//            System.out.println("======" + index);
+            
         } else {
             counts.getAndIncrement(index);
-            System.out.println("------" + index);
+//            System.out.println("------" + index);
         }
     }
     
