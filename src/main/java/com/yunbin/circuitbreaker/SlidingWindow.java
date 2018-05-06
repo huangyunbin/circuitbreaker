@@ -23,7 +23,7 @@ public class SlidingWindow {
     }
     
     
-    public void add(long time) {
+    public  void add(long time) {
 //        clear(time);
         int index = (int) (time % size);
         long current = lastTime.longValue();
