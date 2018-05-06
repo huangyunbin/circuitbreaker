@@ -157,7 +157,7 @@ public class SlidingWindowTest {
     @Test
     public void addTest8() {
         int threadNum = 100;
-        final int num = 10000;
+        final int num = 1000;
         final int circle = 3;
         final int size = 2;
         final SlidingWindow slidingWindow = new SlidingWindow(size);

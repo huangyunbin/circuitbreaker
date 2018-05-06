@@ -49,7 +49,9 @@ public class SlidingWindow {
     }
     
     public int count(long time) {
-//        clear(time);
+        if (time >= lastTime.get() + size) {
+            return 0;
+        }
         int result = 0;
         for (int i = 0; i < size; i++) {
             result += counts.get(i);
