@@ -63,16 +63,16 @@ public class SlidingWindow {
     /**
      * 统计
      */
-    public int count() {
+    public long count() {
         long currentSecond = TimeUnit.NANOSECONDS.toSeconds(System.nanoTime());
         return count(currentSecond);
     }
     
-    int count(long time) {
+    long count(long time) {
         if (time >= lastTime.get() + size) {
             return 0;
         }
-        int result = 0;
+        long result = 0;
         for (int i = 0; i < size; i++) {
             result += counts.get(i);
         }

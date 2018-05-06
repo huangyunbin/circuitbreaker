@@ -18,7 +18,7 @@ public class SlidingWindowTest {
     public void addTest1() {
         SlidingWindow slidingWindow = new SlidingWindow(3);
         slidingWindow.add(1L);
-        int count = slidingWindow.count(3L);
+        long count = slidingWindow.count(3L);
         assertThat(count).isEqualTo(1);
     }
     
@@ -28,7 +28,7 @@ public class SlidingWindowTest {
         SlidingWindow slidingWindow = new SlidingWindow(3);
         slidingWindow.add(1L);
         slidingWindow.add(1L);
-        int count = slidingWindow.count(3L);
+        long count = slidingWindow.count(3L);
         assertThat(count).isEqualTo(2);
     }
     
@@ -37,7 +37,7 @@ public class SlidingWindowTest {
         SlidingWindow slidingWindow = new SlidingWindow(3);
         slidingWindow.add(1L);
         slidingWindow.add(1L);
-        int count = slidingWindow.count(4L);
+        long count = slidingWindow.count(4L);
         assertThat(count).isEqualTo(0);
     }
     
@@ -48,7 +48,7 @@ public class SlidingWindowTest {
         slidingWindow.add(1L);
         slidingWindow.add(2L);
         slidingWindow.add(3L);
-        int count = slidingWindow.count(3L);
+        long count = slidingWindow.count(3L);
         assertThat(count).isEqualTo(3);
     }
     
@@ -60,7 +60,7 @@ public class SlidingWindowTest {
         slidingWindow.add(2L);
         slidingWindow.add(3L);
         slidingWindow.add(4L);
-        int count = slidingWindow.count(4L);
+        long count = slidingWindow.count(4L);
         assertThat(count).isEqualTo(3);
     }
     
@@ -102,7 +102,7 @@ public class SlidingWindowTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        int count = slidingWindow.count();
+        long count = slidingWindow.count();
         assertThat(count).isEqualTo(circle * threadNum * num);
     }
     
@@ -146,7 +146,7 @@ public class SlidingWindowTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        int count = slidingWindow.count();
+        long count = slidingWindow.count();
         assertThat(count).isEqualTo(circle * threadNum * num);
     }
     
@@ -192,7 +192,7 @@ public class SlidingWindowTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        int count = slidingWindow.count();
+        long count = slidingWindow.count();
         assertThat(count).isEqualTo(size * threadNum * num);
     }
     
@@ -245,7 +245,7 @@ public class SlidingWindowTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        int count = slidingWindow.count();
+        long count = slidingWindow.count();
         assertThat(count).isEqualTo(threadNum * num);
     }
     
