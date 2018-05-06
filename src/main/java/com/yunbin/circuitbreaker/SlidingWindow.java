@@ -23,8 +23,8 @@ public class SlidingWindow {
     }
     
     
-    public  void add(long time) {
-//        clear(time);
+    public void add(long time) {
+        clear(time);
         int index = (int) (time % size);
         long current = lastTime.longValue();
         
@@ -58,12 +58,15 @@ public class SlidingWindow {
     }
     
     private void clear(long time) {
-//        if (time < lastTime + size) {
-//            return;
-//        }
-//        for (int i = 0; i < size; i++) {
-//            counts.set(i, 0);
-//        }
+        if (time < lastTime.get() + size) {
+            return;
+        }
+        int index = (int) (time % size);
+        for (int i = 0; i < size; i++) {
+            if (i != index) {
+                counts.set(i, 0);
+            }
+        }
     }
     
     
