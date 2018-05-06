@@ -197,4 +197,57 @@ public class SlidingWindowTest {
     }
     
     
+    /**
+     * 跨周期的测试2
+     */
+    @Test
+    public void addTest9() {
+        int threadNum = 100;
+        final int num = 1000;
+        final int size = 2;
+        final SlidingWindow slidingWindow = new SlidingWindow(size);
+        final CyclicBarrier barrier = new CyclicBarrier(threadNum);
+        final CountDownLatch countDownLatch = new CountDownLatch(threadNum);
+        
+        for (int i = 0; i < threadNum; i++) {
+            new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        barrier.await();
+                        
+                        for (int j = 0; j < num; j++) {
+                            slidingWindow.add();
+                        }
+                        TimeUnit.MILLISECONDS.sleep(900);
+                        
+                        for (int j = 0; j < num; j++) {
+                            slidingWindow.add();
+                        }
+                        
+                        TimeUnit.MILLISECONDS.sleep(2100);
+                        
+                        for (int j = 0; j < num; j++) {
+                            slidingWindow.add();
+                        }
+                        
+                        
+                        countDownLatch.countDown();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }.start();
+            
+        }
+        try {
+            countDownLatch.await();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        int count = slidingWindow.count();
+        assertThat(count).isEqualTo(threadNum * num);
+    }
+    
+    
 }
