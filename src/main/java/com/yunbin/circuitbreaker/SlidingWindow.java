@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * Created by cloud.huang on 18/5/3.
  */
 public class SlidingWindow {
-    private int size;
+    private final int size;
     private volatile AtomicIntegerArray counts;
     private volatile AtomicLong lastTime = new AtomicLong();
     
