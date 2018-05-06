@@ -26,7 +26,7 @@ public class SlidingWindow {
     }
     
     
-    public void add(long time) {
+    void add(long time) {
         clear(time);
         
         int index = (int) (time % size);
@@ -68,7 +68,7 @@ public class SlidingWindow {
         return count(currentSecond);
     }
     
-    public int count(long time) {
+    int count(long time) {
         if (time >= lastTime.get() + size) {
             return 0;
         }
