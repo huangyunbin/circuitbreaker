@@ -17,6 +17,9 @@ public class SlidingWindow {
         counts = new AtomicIntegerArray(size);
     }
     
+    /**
+     * 计数
+     */
     public void add() {
         long currentSecond = TimeUnit.NANOSECONDS.toSeconds(System.nanoTime());
         add(currentSecond);
@@ -25,6 +28,7 @@ public class SlidingWindow {
     
     public void add(long time) {
         clear(time);
+        
         int index = (int) (time % size);
         long current = lastTime.longValue();
         
@@ -35,14 +39,30 @@ public class SlidingWindow {
             } else {
                 counts.getAndIncrement(index);
             }
-//            System.out.println("======" + index);
             
         } else {
             counts.getAndIncrement(index);
-//            System.out.println("------" + index);
         }
     }
     
+    /**
+     * 清除上个周期的数据
+     */
+    private void clear(long time) {
+        if (time < lastTime.get() + size) {
+            return;
+        }
+        int index = (int) (time % size);
+        for (int i = 0; i < size; i++) {
+            if (i != index) {
+                counts.set(i, 0);
+            }
+        }
+    }
+    
+    /**
+     * 统计
+     */
     public int count() {
         long currentSecond = TimeUnit.NANOSECONDS.toSeconds(System.nanoTime());
         return count(currentSecond);
@@ -57,18 +77,6 @@ public class SlidingWindow {
             result += counts.get(i);
         }
         return result;
-    }
-    
-    private void clear(long time) {
-        if (time < lastTime.get() + size) {
-            return;
-        }
-        int index = (int) (time % size);
-        for (int i = 0; i < size; i++) {
-            if (i != index) {
-                counts.set(i, 0);
-            }
-        }
     }
     
     
