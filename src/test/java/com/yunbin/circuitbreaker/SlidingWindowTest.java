@@ -69,7 +69,7 @@ public class SlidingWindowTest {
     public void addTest6() {
         int threadNum = 10;
         final int num = 100;
-        final int circle = 3;
+        final int circle = 20;
         final SlidingWindow slidingWindow = new SlidingWindow(2);
         final CyclicBarrier barrier = new CyclicBarrier(threadNum);
         final CountDownLatch countDownLatch = new CountDownLatch(threadNum);
@@ -86,7 +86,7 @@ public class SlidingWindowTest {
                                 slidingWindow.add();
                             }
                             
-                            TimeUnit.MILLISECONDS.sleep(500);
+                            TimeUnit.MILLISECONDS.sleep(100);
                         }
                         
                         countDownLatch.countDown();
