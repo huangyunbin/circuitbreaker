@@ -6,6 +6,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Created by cloud.huang on 18/5/3.
+ * 按最近时间统计的滑动窗口
  */
 public class SlidingWindow {
     private final int size;

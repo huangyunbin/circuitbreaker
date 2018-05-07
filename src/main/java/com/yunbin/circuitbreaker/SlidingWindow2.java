@@ -4,6 +4,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by cloud.huang on 18/5/6.
+ * 按最近请求统计的滑动窗口
  */
 public class SlidingWindow2 {
     private final int size;
