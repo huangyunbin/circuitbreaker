@@ -1,6 +1,5 @@
 package com.yunbin.circuitbreaker;
 
-import java.util.BitSet;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -8,48 +7,48 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class SlidingWindow2 {
     private final int size;
-    //成功为0，失败为1
-    private final BitSet bitSet;
-    private final AtomicInteger index = new AtomicInteger();
+    private final AtomicBitSet bitSet;
+    private volatile AtomicInteger index = new AtomicInteger();
     private volatile AtomicInteger capacity = new AtomicInteger();
     
     public SlidingWindow2(int size) {
         this.size = size;
-        bitSet = new BitSet(size);
+        bitSet = new AtomicBitSet(size);
     }
     
     
     public void success() {
-        if (capacity.get() < size) {
-            capacity.getAndIncrement();
-        }
-        int target = index.getAndIncrement() % size;
-        bitSet.set(target, false);
+        processCapacity();
+        setNext(true);
     }
     
     public void fail() {
+        processCapacity();
+        setNext(false);
+    }
+    
+    private void setNext(boolean flag) {
+        int target = index.getAndIncrement() % size;
+        bitSet.set(target, flag);
+    }
+    
+    private void processCapacity() {
         if (capacity.get() < size) {
             capacity.getAndIncrement();
         }
-        int target = index.getAndIncrement() % size;
-        bitSet.set(target);
     }
     
+    
     public long getSucessNum() {
-        if (capacity.get() >= size) {
-            return size - bitSet.cardinality();
-        }
-        int max = capacity.get();
-        int result = 0;
-        for (int i = 0; i < max; i++) {
-            if (!bitSet.get(i)) {
-                result++;
-            }
-        }
-        return result;
+        return bitSet.cardinality();
     }
     
     public long getFailNum() {
-        return bitSet.cardinality();
+        if (capacity.get() >= size) {
+            return size - bitSet.cardinality();
+        } else {
+            return capacity.get() - bitSet.cardinality();
+        }
+        
     }
 }
