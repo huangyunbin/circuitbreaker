@@ -11,12 +11,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Created by cloud.huang on 18/5/3.
  */
-public class SlidingWindowTest {
+public class TimeSlidingWindowTest {
     
     
     @Test
     public void addTest1() {
-        SlidingWindow slidingWindow = new SlidingWindow(3);
+        TimeSlidingWindow slidingWindow = new TimeSlidingWindow(3);
         slidingWindow.add(1L);
         long count = slidingWindow.count(3L);
         assertThat(count).isEqualTo(1);
@@ -25,7 +25,7 @@ public class SlidingWindowTest {
     
     @Test
     public void addTest2() {
-        SlidingWindow slidingWindow = new SlidingWindow(3);
+        TimeSlidingWindow slidingWindow = new TimeSlidingWindow(3);
         slidingWindow.add(1L);
         slidingWindow.add(1L);
         long count = slidingWindow.count(3L);
@@ -34,7 +34,7 @@ public class SlidingWindowTest {
     
     @Test
     public void addTest3() {
-        SlidingWindow slidingWindow = new SlidingWindow(3);
+        TimeSlidingWindow slidingWindow = new TimeSlidingWindow(3);
         slidingWindow.add(1L);
         slidingWindow.add(1L);
         long count = slidingWindow.count(4L);
@@ -44,7 +44,7 @@ public class SlidingWindowTest {
     
     @Test
     public void addTest4() {
-        SlidingWindow slidingWindow = new SlidingWindow(3);
+        TimeSlidingWindow slidingWindow = new TimeSlidingWindow(3);
         slidingWindow.add(1L);
         slidingWindow.add(2L);
         slidingWindow.add(3L);
@@ -55,7 +55,7 @@ public class SlidingWindowTest {
     
     @Test
     public void addTest5() {
-        SlidingWindow slidingWindow = new SlidingWindow(3);
+        TimeSlidingWindow slidingWindow = new TimeSlidingWindow(3);
         slidingWindow.add(1L);
         slidingWindow.add(2L);
         slidingWindow.add(3L);
@@ -70,7 +70,7 @@ public class SlidingWindowTest {
         int threadNum = 1000;
         final int num = 100;
         final int circle = 300;
-        final SlidingWindow slidingWindow = new SlidingWindow(10);
+        final TimeSlidingWindow slidingWindow = new TimeSlidingWindow(10);
         final CyclicBarrier barrier = new CyclicBarrier(threadNum);
         final CountDownLatch countDownLatch = new CountDownLatch(threadNum);
         
@@ -114,7 +114,7 @@ public class SlidingWindowTest {
         int threadNum = 100;
         final int num = 10000;
         final int circle = 3;
-        final SlidingWindow slidingWindow = new SlidingWindow(10);
+        final TimeSlidingWindow slidingWindow = new TimeSlidingWindow(10);
         final CyclicBarrier barrier = new CyclicBarrier(threadNum);
         final CountDownLatch countDownLatch = new CountDownLatch(threadNum);
         
@@ -160,7 +160,7 @@ public class SlidingWindowTest {
         final int num = 1000;
         final int circle = 3;
         final int size = 2;
-        final SlidingWindow slidingWindow = new SlidingWindow(size);
+        final TimeSlidingWindow slidingWindow = new TimeSlidingWindow(size);
         final CyclicBarrier barrier = new CyclicBarrier(threadNum);
         final CountDownLatch countDownLatch = new CountDownLatch(threadNum);
         
@@ -205,7 +205,7 @@ public class SlidingWindowTest {
         int threadNum = 100;
         final int num = 1000;
         final int size = 2;
-        final SlidingWindow slidingWindow = new SlidingWindow(size);
+        final TimeSlidingWindow slidingWindow = new TimeSlidingWindow(size);
         final CyclicBarrier barrier = new CyclicBarrier(threadNum);
         final CountDownLatch countDownLatch = new CountDownLatch(threadNum);
         

@@ -6,13 +6,13 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Created by cloud.huang on 18/5/6.
  * 按最近请求统计的滑动窗口
  */
-public class SlidingWindow2 {
+public class RequestSlidingWindow {
     private final int size;
     private final AtomicBitSet bitSet;
     private volatile AtomicInteger index = new AtomicInteger();
     private volatile AtomicInteger capacity = new AtomicInteger();
     
-    public SlidingWindow2(int size) {
+    public RequestSlidingWindow(int size) {
         this.size = size;
         bitSet = new AtomicBitSet(size);
     }

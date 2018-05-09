@@ -8,12 +8,12 @@ import java.util.concurrent.atomic.AtomicLong;
  * Created by cloud.huang on 18/5/3.
  * 按最近时间统计的滑动窗口
  */
-public class SlidingWindow {
+public class TimeSlidingWindow {
     private final int size;
     private volatile AtomicIntegerArray counts;
     private volatile AtomicLong lastTime = new AtomicLong();
     
-    public SlidingWindow(int size) {
+    public TimeSlidingWindow(int size) {
         this.size = size;
         counts = new AtomicIntegerArray(size);
     }

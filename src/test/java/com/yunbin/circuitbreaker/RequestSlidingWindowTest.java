@@ -11,12 +11,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Created by cloud.huang on 18/5/6.
  */
-public class SlidingWindow2Test {
+public class RequestSlidingWindowTest {
     
     
     @Test
     public void addTest1() {
-        SlidingWindow2 slidingWindow = new SlidingWindow2(1000);
+        RequestSlidingWindow slidingWindow = new RequestSlidingWindow(1000);
         slidingWindow.success();
         slidingWindow.success();
         slidingWindow.fail();
@@ -28,7 +28,7 @@ public class SlidingWindow2Test {
     
     @Test
     public void addTest2() {
-        SlidingWindow2 slidingWindow = new SlidingWindow2(3);
+        RequestSlidingWindow slidingWindow = new RequestSlidingWindow(3);
         slidingWindow.success();
         slidingWindow.fail();
         slidingWindow.success();
@@ -42,7 +42,7 @@ public class SlidingWindow2Test {
     
     @Test
     public void addTest4() {
-        SlidingWindow2 slidingWindow = new SlidingWindow2(3);
+        RequestSlidingWindow slidingWindow = new RequestSlidingWindow(3);
         slidingWindow.fail();
         slidingWindow.fail();
         slidingWindow.fail();
@@ -56,7 +56,7 @@ public class SlidingWindow2Test {
     
     @Test
     public void addTest5() {
-        SlidingWindow2 slidingWindow = new SlidingWindow2(3);
+        RequestSlidingWindow slidingWindow = new RequestSlidingWindow(3);
         slidingWindow.success();
         slidingWindow.success();
         slidingWindow.success();
@@ -71,7 +71,7 @@ public class SlidingWindow2Test {
     public void addTest6() throws Exception {
         int threadNum = 100;
         final int num = 1000;
-        final SlidingWindow2 slidingWindow = new SlidingWindow2(threadNum * num * 2);
+        final RequestSlidingWindow slidingWindow = new RequestSlidingWindow(threadNum * num * 2);
         final CyclicBarrier barrier = new CyclicBarrier(threadNum);
         final CountDownLatch countDownLatch = new CountDownLatch(threadNum);
         
@@ -106,7 +106,7 @@ public class SlidingWindow2Test {
         int threadNum = 100;
         final int num = 1000;
         final AtomicInteger index = new AtomicInteger();
-        final SlidingWindow2 slidingWindow = new SlidingWindow2(threadNum * num);
+        final RequestSlidingWindow slidingWindow = new RequestSlidingWindow(threadNum * num);
         final CyclicBarrier barrier = new CyclicBarrier(threadNum);
         final CountDownLatch countDownLatch = new CountDownLatch(threadNum);
         
@@ -145,7 +145,7 @@ public class SlidingWindow2Test {
         final int num = 1000;
         final int size = 1000;
         final AtomicInteger index = new AtomicInteger();
-        final SlidingWindow2 slidingWindow = new SlidingWindow2(size);
+        final RequestSlidingWindow slidingWindow = new RequestSlidingWindow(size);
         final CyclicBarrier barrier = new CyclicBarrier(threadNum);
         final CountDownLatch countDownLatch = new CountDownLatch(threadNum);
         
